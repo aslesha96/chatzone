@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ChatZone.com</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="{{url_for('static',filename = 'FeaturedBooks.css')}}" rel="stylesheet">
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#232f3e;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <h3><a class="header" style="color: #F2F3F4;" href="/">Chat Zone</a></h3>
+      </div>
+      {% if not session.logged_in %}
+      <ul class="nav navbar-nav navbar-right" style="margin-top: 13px">
+        <li><a href="/signup"><span class="glyphicon glyphicon-user" style="color: #F2F3F4;"></span> Sign Up</a></li>
+        <li><a href="/login"><span class="glyphicon glyphicon-log-in" style="color: #F2F3F4;"></span> Login</a></li>
+      </ul>
+      {% else %}
+      <ul class="nav navbar-nav navbar-right" style="margin-top: 13px">
+          <li><a href="/yourposts"><span class="fa fa-ioxhost" style="color: #F2F3F4;"></span>Your Posts</a></li>
+          <li><a href="/dopost"><span class="glyphicon glyphicon-pencil" style="color: #F2F3F4;"></span>Write</a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out" style="color: #F2F3F4;"></span>Logout</a></li>
+      </ul>
+      {% endif %}
+    </div>
+  </nav>
+  <br>
+  <br>
+  <div class = "container1">
+  <div class = "container" >
+    <div class = "row">
+    {% block body %}
+    {% endblock %}
+    </div>
+  </div>
+  </div>
+  <div class="navbar-fixed-bottom" style="background-color:#232f3e">
+  <p style="color: #F2F3F4">Copyrights 2018 @ chatzzone.com</p>
+</div>
+</body>
+</html>

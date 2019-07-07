@@ -1,0 +1,198 @@
+{%if admin%}
+    {%extends "mypage.html"%}
+{% else %}
+    {% extends "layout.html" %}
+{%endif%}
+{% block body %}
+<br>
+<style>
+div.ex1 {
+    height: 250px;
+    overflow: scroll;
+}
+
+span.msg_bbl {
+    background-color: #ddd;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: #555;
+    margin-bottom: 5px;
+}
+</style>
+{% for blog in blogs %}
+<script type = "text/javascript">
+    	var upvotes = 0;
+    	var downvotes = 0;
+    $(function() {
+        $('#upvote{{blog.id}}').click(function() {
+            var blog_id = {{blog.id}};
+            $.ajax({
+                url: '/up',
+                data: {'blog_id':blog_id},
+                dataType : "JSON",
+                type: 'POST',
+                success: function(response) {
+                    $('#like{{blog.id}}').text(response['data']);
+                    $('#dislike{{blog.id}}').text(response['data2']);
+
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#downvote{{blog.id}}').click(function() {
+            var blog_id = {{blog.id}};
+            $.ajax({
+                url: '/down',
+                data: {'blog_id':blog_id},
+                type: 'POST',
+                dataType : "JSON",
+                success: function(response) {
+                    $('#like{{blog.id}}').text(response['data2']);
+                    $('#dislike{{blog.id}}').text(response['data']);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+
+    setInterval(function()
+    {
+        var blog_id = {{blog.id}};
+        $.ajax({
+            url:'/reload',
+            data: {'blog_id': blog_id},
+            type:'POST',
+            datatype:'JSON',
+            success:function(response)
+            {
+              $('#like{{blog.id}}').text(response['likes']);
+              $('#dislike{{blog.id}}').text(response['dislikes']);
+            },
+            error: function(error) {
+                    console.log(error);
+            }
+
+        });
+    }, 2000);
+
+    $(function() {
+        $('#send{{blog.id}}').bind('click', function(){
+            var msg = $('#message{{blog.id}}').val();
+
+            var blog_id = {{blog.id}};
+            $.ajax({
+                url: '/chat',
+                data: {'message': msg, 'blog_id':blog_id},
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(response){
+                    if(response.message!=""){
+                        var email = "<b>"+response.email+"</b>";
+                        var message = "<span class = 'msg_bbl'>"+email+":  "+response.message+"</span>";
+                        $('#chatItem{{blog.id}}').append(message,"<hr>");
+                        $('#message{{blog.id}}').val("");
+                    }
+                }
+            });
+        });
+    });
+
+    setInterval(function(){
+        var blog_id = {{blog.id}};
+        $.ajax({
+            url: '/chatReload',
+            data: {'blog_id': blog_id},
+            type: 'POST',
+            dataType: 'JSON',
+
+          success: function(response) {
+            $('#chatRoom{{blog.id}}').html("");
+            $('#chatItem{{blog.id}}').html("");
+             for(var i=0;i<response.length;i++){
+                var email = "<b>"+response[i].email+"</b>";
+                var message = "<span class = 'msg_bbl'>"+email+":  "+response[i].message+"</span>";
+                $('#chatItem{{blog.id}}').append(message,"<hr>");
+            }
+          },
+          error: function(error){
+            console.log("in error");
+          }
+        });
+    }, 2000);
+
+</script>
+<div class = "well" style="background-color: rgba(0,0,0,0.7);">
+	<div class="well">
+	    <div class="row">
+			<div class="col-md-10">
+				Posted by:
+				{{ blog.blog_by }}
+			</div>
+			<div class="col-md-2">
+				{{ blog.time.strftime("Time: %H:%M") }}
+			</div>
+			<br>
+			<div class="col-md-2">
+				{{ blog.time.strftime("Date: %Y-%m-%d")}}
+			</div>
+	    </div>
+		<br>
+	    <div class="row">
+			<div class="col-md-10">
+				<b>Title:</b><br>
+				{{ blog.blog_title }}
+			</div>
+			<div class="col-md-10">
+				<b>Message:</b><br>
+				{{ blog.blog_content }}
+			</div>
+			{% if session.logged_in %}
+			<button id="upvote{{blog.id}}">Like</button>
+
+			<span id="like{{blog.id}}">{{blog.blog_upvotes}}</span>
+			<button id="downvote{{blog.id}}">Dislike</button>
+
+			<span id="dislike{{blog.id}}">{{blog.blog_downvotes}}</span>
+			{%endif%}
+		</div>
+	</div>
+
+	{% if session.logged_in %}
+    <div class="ex1 well">
+        <div id = "chatRoom{{blog.id}}">
+
+        {% for chat in chats %}
+            {%if blog.id == chat.blogid %}
+                <span class = "msg_bbl"><b>{{chat.email}}: </b>{{chat.message}}</span>
+                <hr>
+            {%endif%}
+        {% endfor %}
+        </div>
+        <div style="margin-left: 10px" id = "chatItem{{blog.id}}">
+
+        </div>
+    </div>
+
+    <div class = "row">
+    <div class = "col-md-3"></div>
+    <div class = "col-md-7">
+    <div class = "row">
+    <textarea style="width: 450px; height: 50px" id="message{{blog.id}}"></textarea>
+    <button class="btn btn-primary" type="submit" id="send{{blog.id}}" style="margin-top: -5%;">Send</button>
+    </div>
+    </div>
+    <div class = "col-md-3"></div>
+    </div>
+    {%endif%}
+</div>
+{% endfor %}
+
+    <br>
+    <br>
+
+{% endblock %}

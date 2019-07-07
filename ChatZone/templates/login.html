@@ -1,0 +1,132 @@
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChatZone.com</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="{{url_for('static',filename = 'register.css')}}" rel="stylesheet">
+</head>
+
+<body>
+	<div class = "container" >
+   		<div class="row">
+    		<div class="col-md-6 col-md-offset-3">
+      			<div class="panel panel-login">
+      				<div class = "row header">
+						<h1><a href="/">Chat Zone</a></h1>
+					</div>
+
+        			<div class="panel-heading">
+          				<div class="row">
+            				<div class="col-xs-6 tabs">
+              					<a href="#" class="active" id="login-form-link"><div class="login">LOGIN</div></a>
+            				</div>
+            				<div class="col-xs-6 tabs">
+              					<a href="#" id="register-form-link"><div class="register">REGISTER</div></a>
+            				</div>
+          				</div>
+        			</div>
+      				<div class="panel-body">
+          				<div class="row">
+            				<div class="col-lg-12">
+
+                        {%if loggin %}
+              					<form id="login-form" action="{{ url_for('login') }}" method="post" role="form" style="display: block;">
+                					<h2>LOGIN</h2>
+                  					<div class="form-group">
+                    					<input type="text" name="email" tabindex="1" class="form-control" placeholder="Email" value="">
+                  					</div>
+                  					<div class="form-group">
+                    				<input type="password" name="password" tabindex="2" class="form-control" placeholder="Password">
+                  					</div>
+                  					<div class="col-xs-6 form-group pull-right">     
+                        				<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                  					</div>
+                            {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+              					</form>
+                        <form id="register-form" action="{{ url_for('signup') }}" method="post" role="form" style="display: none;">
+                          <h2>REGISTER</h2>
+                            <div class="form-group">
+                              <input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                            </div>
+                            <div class="form-group">
+                              <input type="email" name="email" tabindex="2" class="form-control" placeholder="Email Address" value="">
+                            </div>
+                            <div class="form-group">
+                              <input type="password" name="password" tabindex="3" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                              <input type="password" name="confirm-password" tabindex="4" class="form-control" placeholder="Confirm Password">
+                            </div>
+                            <div class="form-group">
+                              <input type="phone" name="phone" tabindex="5" class="form-control" placeholder="Phone">
+                            </div>
+                            <div class="form-group">
+                              <div class="row">
+                                  <div class="col-sm-6 col-sm-offset-3">
+                                    <input type="submit" name="register-submit" id="register-submit" tabindex="6" class="form-control btn btn-register" value="Register Now">
+                                  </div>
+                              </div>
+                            </div>
+                        </form>
+                        {%endif%}
+
+
+                        {%if signup %}
+                        <form id="login-form" action="{{ url_for('login') }}" method="post" role="form" style="display: none;">
+                          <h2>LOGIN</h2>
+                            <div class="form-group">
+                              <input type="text" name="email" tabindex="1" class="form-control" placeholder="Email" value="">
+                            </div>
+                            <div class="form-group">
+                            <input type="password" name="password" tabindex="2" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="col-xs-6 form-group pull-right">     
+                                <input type="submit" name="login-submit" id="login-submit" tabindex="3" class="form-control btn btn-login" value="Log In">
+                            </div>
+                        </form>
+              					<form id="register-form" action="{{ url_for('signup') }}" method="post" role="form" style="display: block;">
+                					<h2>REGISTER</h2>
+                  					<div class="form-group">
+                    					<input type="text" name="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                  					</div>
+                  					<div class="form-group">
+                    					<input type="email" name="email" tabindex="2" class="form-control" placeholder="Email Address" value="">
+                  					</div>
+                  					<div class="form-group">
+                    					<input type="password" name="password" tabindex="3" class="form-control" placeholder="Password">
+                  					</div>
+                  					<div class="form-group">
+                    					<input type="password" name="confirm-password" tabindex="4" class="form-control" placeholder="Confirm Password">
+                  					</div>
+                            <div class="form-group">
+                              <input type="phone" name="phone" tabindex="5" class="form-control" placeholder="Phone">
+                            </div>
+                  					<div class="form-group">
+                    					<div class="row">
+                      						<div class="col-sm-6 col-sm-offset-3">
+                        						<input type="submit" name="register-submit" id="register-submit" tabindex="6" class="form-control btn btn-register" value="Register Now">
+                      						</div>
+                    					</div>
+                  					</div>
+                            {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+              					</form>
+                        {%endif%}
+
+            				</div>
+          				</div>
+        			</div>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+	<script type="text/javascript" src="{{url_for('static',filename='register.js')}}"></script>
+</body>
+</html>
+{% endblock %}

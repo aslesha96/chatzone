@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,700,500);
+@import url(https://fonts.googleapis.com/css?family=Righteous);
+
+body {
+  color:#000000;
+  font-family: 'Varela Round';
+  font-weight:100;
+  background-size: cover;
+}
+
+.nav-bar{
+  background-color:  #232f3e;
+  color:white;
+}
+
+.header
+{
+  font-family: 'Righteous', cursive;
+  margin-left: 30px;
+  margin-top: 35px;
+  background-color:  #232f3e;
+  color:white;
+}
+
+.button {
+  background-color: #232f3e;
+  border: none;
+  color: white !important;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn:hover
+{
+background-image:none !important;
+background-color: #232f3e !important;
+}
+
+.btn:visited
+{
+background-image:none !important;
+background-color: #232f3e !important;
+}
+
+.thumbnail img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+.a-letter-space {
+  display: inline-block;
+  width: .385em;
+}
+
+.container1{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-image: url("blog.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+.container{
+  /*background-color: black;*/
+}

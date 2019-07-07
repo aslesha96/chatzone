@@ -1,0 +1,49 @@
+{% extends "mypage.html" %}
+{% block body %}
+{% for blog in pendingblogs %}
+<div class = "well" style="background-color: rgba(0,0,0,0.7);">
+	<div class="well">
+	    <div class="row">
+			<div class="col-md-10">
+				Posted by:
+				{{ blog.blog_by }}
+			</div>
+			<div class="col-md-2">
+				{{ blog.time.strftime("Time: %H:%M") }}
+			</div>
+			<br>
+			<div class="col-md-2">
+				{{ blog.time.strftime("Date: %Y-%m-%d")}}
+			</div>
+	    </div>
+		<br>
+	    <div class="row">
+			<div class="col-md-10">
+				<b>Title:</b><br>
+				{{ blog.blog_title }}
+			</div>
+			<div class="col-md-10">
+				<b>Message:</b><br>
+				{{ blog.blog_content }}
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-8"></div>
+			<div class = "col-md-2">
+				<!-- <a href="/status"> <i class="far fa-check-circle"> </i> </a> 	 -->
+    			<form action="{{ url_for('blogstatus') }}" method="POST">
+    				<input type="hidden" name="approve" value = {{blog.id}}>
+    			<button class="btn btn-primary" type="submit" style="margin-top: -5%;">Approve</button>
+    			</form>
+    		</div>
+    		<div class = "col-md-2">
+    			<form action="{{ url_for('blogstatus') }}" method="POST">
+    				<input type="hidden" name="decline" value = {{blog.id}}>
+    			<button class="btn btn-primary" type="submit" style="margin-top: -5%;">Decline</button>
+    			</form>
+			</div>
+		</div>
+	</div>
+</div>
+{%endfor%}
+{% endblock %}

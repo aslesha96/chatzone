@@ -1,0 +1,41 @@
+{%if admin%}
+    {%extends "mypage.html"%}
+{% else %}
+    {% extends "layout.html" %}
+{%endif%}
+{% block body %}
+{% for blog in yourposts %}
+<div class = "well" style="background-color: rgba(0,0,0,0.7);">
+	<div class="well">
+	    <div class="row">
+			<div class="col-md-10">
+				Posted by:
+				{{ blog.blog_by }}
+			</div>
+			<div class="col-md-2">
+				{{ blog.time.strftime("Time: %H:%M") }}
+			</div>
+			<br>
+			<div class="col-md-2">
+				{{ blog.time.strftime("Date: %Y-%m-%d")}}
+			</div>
+	    </div>
+		<br>
+	    <div class="row">
+			<div class="col-md-10">
+				<b>Title:</b><br>
+				{{ blog.blog_title }}
+			</div>
+			<div class="col-md-10">
+				<b>Message:</b><br>
+				{{ blog.blog_content }}
+			</div>
+		</div>
+		<div class = "row">
+			<div class="col-md-10"></div>
+			<div class="col-md-2"><p><b>Status: </b>{{blog.status}}</p></div>
+		</div>
+	</div>
+</div>
+{%endfor%}
+{% endblock %}
